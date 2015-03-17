@@ -16,6 +16,7 @@
     "gulp-less": "^3.0.1",
     "gulp-livereload": "^3.8.0",
     "karma": "^0.12.31",
+    "tag": "^0.1.0",
     "vinyl-transform": "^1.0.0"
   }
 }
