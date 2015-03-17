@@ -2,6 +2,9 @@
   "name": "Battleship",
   "version": "0.0.1",
   "description": "Online version of the traditional boardgame for two players",
+  "scripts": {
+    "start": "node app/server.js"
+  },
   "dependencies": {
     "express": "^4.12.2",
     "socket.io": "^1.3.4"
@@ -10,6 +13,8 @@
     "browserify": "^9.0.3",
     "gulp": "^3.8.11",
     "gulp-less": "^3.0.1",
-    "karma": "^0.12.31"
+    "gulp-livereload": "^3.8.0",
+    "karma": "^0.12.31",
+    "vinyl-transform": "^1.0.0"
   }
 }
