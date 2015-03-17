@@ -1,7 +1,14 @@
 var gulp       = require('gulp'),
     browserify = require('browserify'),
     transform  = require('vinyl-transform'),
-    livereload = require('gulp-livereload');
+    browsersync = require('browser-sync'),
+    less = require('gulp-less');
+
+gulp.task('browser-sync', function() {
+    browsersync({
+        proxy: 'localhost:8000'
+    });
+});
 
 gulp.task('browserify', function () {
     var browserified = transform(function(filename) {
@@ -11,13 +18,16 @@ gulp.task('browserify', function () {
 
     return gulp.src(['./src/js/*.js'])
         .pipe(browserified)
-        .pipe(gulp.dest('./app/public/js/')).
-        pipe(livereload());
+        .pipe(gulp.dest('./app/public/js/'));
 });
 
-gulp.task('watch', function() {
-    //livereload.listen();
-    gulp.watch('src/**/*', ['browserify']);
+gulp.task('less', function() {
+    return gulp.src('./src/less/**/*.less')
+        .pipe(less())
+        .pipe(gulp.dest('./app/public/css'));
 });
 
-gulp.task('default', ['browserify']);
+gulp.task('default', ['browser-sync'], function() {
+    gulp.watch('src/js/**/*.js', ['browserify', browsersync.reload]);
+    gulp.watch('src/less/**/*.less', ['less', browsersync.reload]);
+});

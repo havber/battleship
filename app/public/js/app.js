@@ -9,6 +9,7 @@ var socket = io(),
 
 button.addEventListener('click', function(event) {
     event.preventDefault();
+    console.log('Hepp!');
     socket.emit('btnClick', 'User clicked button');
     return false;
 });
