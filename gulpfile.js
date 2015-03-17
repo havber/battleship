@@ -27,7 +27,14 @@ gulp.task('less', function() {
         .pipe(gulp.dest('./app/public/css'));
 });
 
-gulp.task('default', ['browser-sync'], function() {
+gulp.task('gfx', function() {
+    gulp.src(['./src/gfx/**/*'])
+        .pipe(gulp.dest('./app/public/gfx'));
+});
+
+gulp.task('watch', ['browser-sync'], function() {
     gulp.watch('src/js/**/*.js', ['browserify', browsersync.reload]);
     gulp.watch('src/less/**/*.less', ['less', browsersync.reload]);
 });
+
+gulp.task('default', ['browserify', 'less', 'gfx']);
