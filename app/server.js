@@ -2,29 +2,37 @@ var express = require('express'),
     app = express(),
     http = require('http').Server(app),
     io = require('socket.io')(http),
-    clients = [];
+    player = require('../bin/player'),
+    players = [];
 
 app.use(express.static(__dirname + '/public'));
 
 io.on('connection', function(socket) {
-    console.log('A new user connected');
-    clients.push(socket);
-    console.info('Number of clients is now ' + clients.length);
 
-    socket.on('btnClick', function(data) {
-        console.log(data);
-        socket.broadcast.emit('clicked');
-    });
+    if (players.length < 2) {
+        var new_player = new player.Player('pl_'+socket.id, socket.id);
+        socket.bs_index = players.length;
+
+        if(players.length > 0) {
+            players[0].opponent_id = new_player.id;
+            new_player.opponent_id = players[0].id;
+        }
+
+        players.push(new_player);
+        console.log(players);
+
+        socket.emit('ready', new_player);
+    }
 
     socket.on('disconnect', function() {
-        console.log('user disconnected');
-        var index = clients.indexOf(socket);
-        if (index != -1) {
-            clients.splice(index, 1);
-            console.info('Client gone (id=' + socket.id + ').');
-            console.info('Number of clients is now ',clients.length);
-        }
+        players.splice(this.bs_index, 1);
+        console.dir(players);
     });
+
+    socket.on('bomb dropped', function(data) {
+        console.log('Bomb dropped on ' + data);
+    });
+
 });
 
 http.listen(8000, function() {

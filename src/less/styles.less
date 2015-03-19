@@ -1,5 +1,4 @@
 body {
-  background-color: lightgreen;
   background-image: url('../gfx/battleship.jpg');
   background-size: cover;
 }
@@ -7,7 +6,6 @@ body {
 .bs-main-content {
   position: absolute;
   top: 10%;
-  //bottom: 10%;
   left: 10%;
   right: 10%;
   border-radius: 20px;
@@ -15,8 +13,8 @@ body {
   padding: 50px;
 }
 
-.bs-grid {
-
+.bs-main-board {
+  float: left;
   table {
     padding: 0;
 
@@ -32,4 +30,10 @@ body {
       }
     }
   }
+}
+
+.bs-sidebar {
+  float: right;
+  width: 50%;
+  background-color: red
 }

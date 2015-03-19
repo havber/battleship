@@ -3,10 +3,11 @@
 
 var events = require('./events'),
     board = require('./board'),
-    grid = document.querySelector('.bs-grid');
+    boardElement = document.querySelector('.bs-main-board'),
+    socket = io();
 
-console.log(board);
-var socket = io(),
-    button = document.querySelector('#btn');
-
-grid.appendChild(board.renderBoard(8,8));
+socket.on('ready', function(data) {
+    console.log(data);
+    boardElement.innerHTML = '';
+    boardElement.appendChild(board.renderBoard(data.map));
+});
